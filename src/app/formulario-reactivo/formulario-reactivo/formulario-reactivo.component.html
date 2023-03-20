@@ -1,25 +1,55 @@
-<form class="form-group container bg-info text-dark rounded" autocomplete="off">
+<form (ngSubmit)="agregarProyecto()"  [formGroup]="formularioReactivo" class="form-group container bg-info text-dark rounded" autocomplete="off">
   <div>
-    <label class="form-label mt-2" for="proyecto">Proyecto</label>
-    <input class="form-control" type="text"id="proyecto" placeholder="Nombre Del Proyecto" />
+    <label class="form-label mt-2" for="proyectoR">Proyecto</label>
+    <input class="form-control" type="text"id="proyectoR" placeholder="Nombre Del Proyecto" formControlName="proyectos"/>
   </div>
 
   <div>
-    <label class="form-label mt-2" for="horas">Horas</label>
-    <input class="form-control" type="number"id="horas" placeholder="Horas" />
+    <label class="form-label mt-2" for="horasR">Horas</label>
+    <input class="form-control" type="number"id="horasR" placeholder="Horas"  formControlName="horas"/>
   </div>
 
   <div>
-    <label class="form-label mt-2" for="tecnologias">Tecnologia</label>
-    <input class="form-control"
-      type="text"
-     id="tecnologias"
-      placeholder="Nombre de la tecnologia"
-    />
+    <label class="form-label mt-2" for="tecnologiasR">Tecnologia</label>
+    <div class="row">
+      <div class="col-12 col-md-8">
+        <input
+          class="form-control"
+          type="text"
+          id="tecnologiasR"
+          placeholder="Nombre de la tecnologia" [formControl]="tecnologia"
+        />
+      </div>
+      <div class="col-12 col-md-4 my-1">
+        <button (click)="agregarTecnologia()"  class="btn btn-success">Agregar</button>
+      </div>
+      <div class="col-4 my-1">
+        <ul class="list-group list-group-horizontal col-4">
+          <li *ngFor="let tecnologia of tecnologias.value" class="list-group-item">{{tecnologia}}</li>
+        </ul>
+      </div>
+    </div>
   </div>
-
+  <div *ngIf="validar()"  class="alert alert-danger d-flex align-items-center gap-1 mt-2" role="alert">
+    <span>
+      <i class="bi bi-exclamation-triangle-fill"></i>
+    </span>
+    <div>
+     <span>Formulario Invalido</span>
+    </div>
+  </div>
+  <pre>{{formularioReactivo.invalid}}</pre>
   <div>
     <button class="btn btn-warning mt-2 mb-3 w-100" type="submit">Agregar Proyecto</button>
   </div>
 </form>
+
+
+<div class="card mt-3" *ngFor='let proyecto of proyectos' style="width: 18rem;">
+  <div class="card-body" >
+     <h6 class="card-subtitle mb-2 text-muted">Proyectos: {{proyecto.proyectos}}</h6>
+    <h6 class="card-subtitle mb-2 text-muted">Horas: {{proyecto.horas}}</h6>
+    <h6 class="card-subtitle mb-2 text-muted">Tecnologias: {{proyecto.tecnologias}}</h6>
+  </div>
+</div>
 
